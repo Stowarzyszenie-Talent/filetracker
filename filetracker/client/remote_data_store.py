@@ -40,6 +40,10 @@ SERVER_ACCEPTS_SHA256_DIGEST = 3
 # The server supports deleting files
 SERVER_ACCEPTS_DELETE = 4
 
+# The server can list files (recursively)
+SERVER_CAN_LIST_FILES = 5
+
+
 _PROTOCOL_CAPABILITIES = {
     1: [
         SERVER_REQUIRES_VERSION_HEADER,
@@ -48,6 +52,7 @@ _PROTOCOL_CAPABILITIES = {
         SERVER_ACCEPTS_GZIP,
         SERVER_ACCEPTS_SHA256_DIGEST,
         SERVER_ACCEPTS_DELETE,
+        SERVER_CAN_LIST_FILES,
     ],
 }
 
@@ -171,6 +176,29 @@ class RemoteDataStore(DataStore):
 
         stream = _FileLikeFromResponse(response)
         return stream, versioned_name(name, remote_version)
+
+    def list_files(self):
+        """Returns a list of paths"""
+        if not self._has_capability(SERVER_CAN_LIST_FILES):
+            return
+        url = self.base_url + "/list/"
+        response = requests.get(url)
+        response.raise_for_status()
+        l = []
+        type = 0
+        for line in response.content.decode('utf-8').split('\n'):
+            if type == 0:
+                name = line
+            if type == 1:
+                mtime = int(line)
+            if type == 2:
+                l.append(DataStore.FileInfoEntry(
+                    name=name,
+                    mtime=mtime,
+                    size=int(line),
+                ))
+            type = (type + 1) % 3
+        return l
 
     def exists(self, name):
         url, version = self._parse_name(name)

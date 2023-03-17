@@ -211,8 +211,9 @@ def _list_files_iterator(root_dir, version_cutoff):
             ft_relative_path = os.path.relpath(local_path, root_dir)
 
             mtime = os.lstat(local_path).st_mtime
+            size = os.lstat(local_path).st_size
             if mtime <= version_cutoff:
-                yield (ft_relative_path + '\n').encode()
+                yield (ft_relative_path + '\n' + str(int(mtime)) + '\n' + str(size) + '\n').encode()
 
 
 if __name__ == '__main__':

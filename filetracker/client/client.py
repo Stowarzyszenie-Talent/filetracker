@@ -328,6 +328,17 @@ class Client(object):
         if self.remote_store:
             self.remote_store.delete_file(name)
 
+    def list_remote_files(self):
+        """Returns list of all files on the filetracker server.
+        
+        Each element of this list is of :class:`DataStore.FileInfoEntry`
+        type.
+        """
+        result = []
+        if self.remote_store:
+            result.extend(self.remote_store.list_files())
+        return result
+
     def list_local_files(self):
         """Returns list of all stored local files.
 
