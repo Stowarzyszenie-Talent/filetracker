@@ -73,17 +73,21 @@ class CacheCleaner(object):
         self.cache_size_limit = cache_size_limit
         self.cleaning_level = cache_size_limit * percent_cleaning_level / 100.0
 
+    def run_once(self):
+        """Cleans cache once"""
+        try:
+            self._scan_disk()
+            do_cleaning, delete_from_index = self._analyze_file_index()
+            if do_cleaning:
+                self._clean_cache(delete_from_index)
+        except Exception:
+            logger.exception("Following exception occurred:")
+    
     def run(self):
         """Starts cleaning cache in infinite loop."""
         logger.info("Starting daemon.")
         while True:
-            try:
-                self._scan_disk()
-                do_cleaning, delete_from_index = self._analyze_file_index()
-                if do_cleaning:
-                    self._clean_cache(delete_from_index)
-            except Exception:
-                logger.exception("Following exception occurred:")
+            self.run_once()
             sleeping_until_time = datetime.datetime.now() + self.scan_interval
             logger.info("Sleeping until %s.", sleeping_until_time)
             time.sleep(self.scan_interval.total_seconds())
@@ -176,6 +180,13 @@ def main():
         "Example: 1G512M. Note: K=2**10.",
     )
     parser.add_argument(
+        '-o',
+        '--oneshot',
+        dest='oneshot',
+        action='store_true',
+        help="Run once and exit instead of running as a daemon",
+    )
+    parser.add_argument(
         '-i',
         '--scan-interval',
         dest='scan_interval',
@@ -233,13 +244,16 @@ def main():
     except ValueError as exception:
         parser.error(exception)
 
-    daemon = CacheCleaner(
+    cleaner = CacheCleaner(
         cache_size_limit=cache_size_limit,
         glob_cache_dirs=args.glob_cache_dirs,
         scan_interval=scan_interval,
         percent_cleaning_level=args.percent_cleaning_level,
     )
-    daemon.run()
+    if args.oneshot:
+        cleaner.run_once()
+    else:
+        cleaner.run()
 
 
 _time_units = dict(s=1, m=60, h=60 * 60, d=24 * 60 * 60)
