@@ -104,8 +104,10 @@ class FileStorage(object):
         )
 
     def __del__(self):
-        self.db.close()
-        self.db_env.close()
+        if hasattr(self, 'db'):
+            self.db.close()
+        if hasattr(self, 'db_env'):
+            self.db_env.close()
 
     def store(
         self,
