@@ -210,8 +210,9 @@ def _list_files_iterator(root_dir, version_cutoff):
             local_path = os.path.join(root_dir, cur_dir, file_name)
             ft_relative_path = os.path.relpath(local_path, root_dir)
 
-            mtime = os.lstat(local_path).st_mtime
-            size = os.lstat(local_path).st_size
+            stat = os.lstat(local_path)
+            mtime = stat.st_mtime
+            size = stat.st_size
             if mtime <= version_cutoff:
                 yield (ft_relative_path + '\n' + str(int(mtime)) + '\n' + str(size) + '\n').encode()
 
