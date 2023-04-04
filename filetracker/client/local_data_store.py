@@ -98,7 +98,7 @@ def _save_stream(path, stream, version=None):
         return version
     if hasattr(stream, 'name') and os.path.exists(stream.name):
         try:
-            if not os.path.samefile(stream.name, path):
+            if not os.path.exists(path) or not os.path.samefile(stream.name, path):
                 if os.path.exists(path):
                     os.unlink(path)
                 os.link(stream.name, path)
