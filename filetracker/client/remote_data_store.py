@@ -139,7 +139,11 @@ class RemoteDataStore(DataStore):
                 # sending. It can be stored in memory or in a temporary file
                 #  and a temporary file seems to be a more suitable choice.
                 with tempfile.TemporaryFile() as tmp:
-                    with gzip.GzipFile(fileobj=tmp, mode='wb') as gz:
+                    try:
+                        compresslevel = int(os.environ.get("FILETRACKER_COMPRESSION_LEVEL", 9))
+                    except ValueError:
+                        raise FiletrackerError("FILETRACKER_COMPRESSION_LEVEL environment variable is not a valid number")
+                    with gzip.GzipFile(fileobj=tmp, compresslevel=compresslevel, mode='wb') as gz:
                         shutil.copyfileobj(f, gz)
                     tmp.seek(0)
                     headers['Content-Encoding'] = 'gzip'
