@@ -57,6 +57,12 @@ _DEFAULT_LOG_CONFIG_JSON = """
       "formatter": "precise",
       "level": "INFO",
       "stream": "ext://sys.stdout"
+    },
+    "console": {
+      "class": "logging.StreamHandler",
+      "formatter": "precise",
+      "level": "INFO",
+      "stream": "ext://sys.stdout"
     }
   },
   "formatters": {
@@ -226,7 +232,7 @@ def main(args=None):
 
     db_init(os.path.join(options.dir, 'db'))
 
-    conf_fd, conf_path = tempfile.mkstemp(text=True)
+    conf_fd, conf_path = tempfile.mkstemp(text=True, suffix=".py")
     try:
         conf_file = os.fdopen(conf_fd, 'w')
         conf_file.write(gunicorn_settings)
