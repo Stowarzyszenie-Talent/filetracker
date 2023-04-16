@@ -51,6 +51,12 @@ _DEFAULT_LOG_CONFIG_JSON = """
       "formatter": "precise",
       "level": "INFO",
       "stream": "ext://sys.stdout"
+    },
+    "console": {
+      "class": "logging.StreamHandler",
+      "formatter": "precise",
+      "level": "INFO",
+      "stream": "ext://sys.stdout"
     }
   },
   "formatters": {
