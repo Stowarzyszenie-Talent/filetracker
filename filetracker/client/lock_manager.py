@@ -3,7 +3,7 @@
 import fcntl
 import os
 
-from filetracker.utils import split_name, check_name, mkdir, rmdirs
+from filetracker.utils import filetracker_file_mode, split_name, check_name, mkdir, rmdirs
 
 
 class LockManager(object):
@@ -59,7 +59,7 @@ class FcntlLockManager(LockManager):
             fcntl.flock(manager.tree_lock_fd, fcntl.LOCK_EX)
             try:
                 mkdir(dir)
-                self.fd = os.open(filename, os.O_WRONLY | os.O_CREAT, 0o600)
+                self.fd = os.open(filename, os.O_WRONLY | os.O_CREAT, filetracker_file_mode())
             finally:
                 fcntl.flock(manager.tree_lock_fd, fcntl.LOCK_UN)
 
@@ -102,7 +102,7 @@ class FcntlLockManager(LockManager):
 
         # All mkdirs, opens, rmdirs and unlinks must be guarded by this lock
         self.tree_lock_fd = os.open(
-            os.path.join(dir, 'tree.lock'), os.O_WRONLY | os.O_CREAT, 0o600
+            os.path.join(dir, 'tree.lock'), os.O_WRONLY | os.O_CREAT, filetracker_file_mode()
         )
 
     def __del__(self):
