@@ -42,7 +42,7 @@ import tempfile
 import bsddb3
 import six
 
-from filetracker.utils import file_digest
+from filetracker.utils import file_digest, filetracker_dir_mode, filetracker_file_mode
 
 
 _LOCK_RETRIES = 20
@@ -449,7 +449,7 @@ def _file_version(path):
 def _exclusive_lock(path):
     """A simple wrapper for fcntl exclusive lock."""
     _create_file_dirs(path)
-    fd = os.open(path, os.O_WRONLY | os.O_CREAT, 0o600)
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT, filetracker_file_mode())
 
     try:
         retries_left = _LOCK_RETRIES
@@ -491,7 +491,7 @@ def _no_lock():
 def _makedirs(path):
     """A py2 wrapper for os.makedirs() that simulates exist_ok=True flag."""
     try:
-        os.makedirs(path)
+        os.makedirs(path, filetracker_dir_mode())
     except OSError as e:
         if e.errno != errno.EEXIST:
             raise

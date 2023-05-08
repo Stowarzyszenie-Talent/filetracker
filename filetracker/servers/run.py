@@ -33,7 +33,7 @@ import bsddb3
 
 from filetracker.servers.files import FiletrackerServer
 from filetracker.servers.migration import MigrationFiletrackerServer
-from filetracker.utils import mkdir
+from filetracker.utils import filetracker_dir_mode, mkdir
 
 
 logger = logging.getLogger(__name__)
@@ -185,10 +185,10 @@ def main(args=None):
 
     filetracker_dir = os.path.abspath(options.dir)
     if not os.path.exists(filetracker_dir):
-        os.makedirs(filetracker_dir, 0o700)
+        os.makedirs(filetracker_dir, filetracker_dir_mode())
     docroot = os.path.join(filetracker_dir, 'links')
     if not os.path.exists(docroot):
-        os.makedirs(docroot, 0o700)
+        os.makedirs(docroot, filetracker_dir_mode())
 
     gunicorn_settings = strip_margin(
         """
