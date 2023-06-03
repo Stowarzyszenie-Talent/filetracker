@@ -58,7 +58,7 @@ def check_name(name, allow_version=True):
 
 def mkdir(name):
     try:
-        os.makedirs(name, filetracker_dir_mode())
+        os.makedirs(name, 0o700)
     except OSError as e:
         if e.errno != errno.EEXIST:
             raise
@@ -101,9 +101,3 @@ def file_digest(source):
         source.close()
 
     return hash_sha256.hexdigest()
-
-def filetracker_dir_mode():
-    return int(os.environ.get("FILETRACKER_FILE_MODE", "700"), 8)
-
-def filetracker_file_mode():
-    return filetracker_dir_mode() & ~0o111
