@@ -82,9 +82,10 @@ class ProtocolTest(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
 
         lines = [l for l in res.text.split('\n') if l]
+        self.assertEqual(len(lines), 6)
         expected = [
-            'ory/list_a.txt',
-            'ory/list_b.txt',
+            'ory/list_a.txt', lines[1], '85',
+            'ory/list_b.txt', lines[4], '85',
         ]
         six.assertCountEqual(self, lines, expected)
 
