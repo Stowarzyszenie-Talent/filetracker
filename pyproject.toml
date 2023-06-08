@@ -36,8 +36,8 @@ version = "2.1.5"
 
 [project.optional-dependencies]
 server = [
-    "gevent<21.13",
-    "greenlet<1.2",
+    "gevent<22.11",
+    "greenlet<2.1",
 ]
 tests = [
     "pytest",

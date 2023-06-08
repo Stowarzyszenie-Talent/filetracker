@@ -43,6 +43,7 @@ in
 buildPythonPackage rec {
   name = "filetracker";
   version = "2.1.5";
+  format = "pyproject";
   disabled = pythonAtLeast "3.9";
 
   src = builtins.path {
