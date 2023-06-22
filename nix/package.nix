@@ -31,15 +31,6 @@ let
     } // (if hash != null then { inherit hash; } else { })
     // (if sha256 != null then { inherit sha256; } else { }));
   } // rest);
-
-  flup6 = simplePackage {
-    name = "flup6";
-    version = "1.1.1";
-    hash = "sha256-/QNMaGKjILn4F2oU+pTgXWfVnmE1nDTG2r0NMaJqQIQ=";
-
-    # thread vs _thread issues
-    doCheck = false;
-  };
 in
 buildPythonPackage rec {
   name = "filetracker";
@@ -63,7 +54,6 @@ buildPythonPackage rec {
   propagatedBuildInputs = [
     six
     bsddb3
-    flup6
     (gunicorn.overrideAttrs (old: {
       propagatedBuildInputs = old.propagatedBuildInputs ++ [ gevent ];
     }))
