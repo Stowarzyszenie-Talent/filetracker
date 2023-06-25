@@ -11,7 +11,7 @@
         })
       ];
 
-      filetracker = with final.python38Packages; toPythonApplication filetracker;
+      filetracker = with final.python310Packages; toPythonApplication filetracker;
     };
 
     nixosModules.default = ./nix/module;
