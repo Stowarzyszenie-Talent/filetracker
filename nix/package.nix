@@ -16,6 +16,8 @@
 , gunicorn
 , gevent
 , greenlet
+, setuptools
+, setuptools-scm
 
 , ...
 }:
@@ -61,6 +63,8 @@ buildPythonPackage rec {
     greenlet
     progressbar2
     requests
+    setuptools
+    setuptools-scm
   ];
 
   # This will add the required packages to the PYTHONPATH environment variable so that gunicorn workers loaded by gunicorn work.
