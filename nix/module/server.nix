@@ -31,6 +31,16 @@
       description = "The number of gunicorn workers to spawn";
       type = with lib.types; oneOf [ (strMatching "auto") ints.positive ];
     };
+
+    separateStdoutFromJournal = lib.mkOption {
+      default = false;
+      description = ''
+        Redirect the filetracker server's stdout to a file in /var/log/sio2.
+        You have to ensure that directory exists and rotate the logs yourself,
+        unless you use talentsio, which does the former.
+      '';
+      type = lib.types.bool;
+    };
   };
 
   config =
@@ -95,6 +105,9 @@
             StateDirectory = "filetracker";
             User = "filetracker";
             Group = "filetracker";
+            # S*stemd is retarded and tries to open the stdout file first
+            #LogsDirectory = lib.mkIf cfg.separateStdoutFromJournal "sio2";
+            StandardOutput = lib.mkIf cfg.separateStdoutFromJournal "append:/var/log/sio2/filetracker.log";
 
             PrivateTmp = true;
             ProtectSystem = "strict";
