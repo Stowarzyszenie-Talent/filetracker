@@ -51,14 +51,13 @@ buildPythonPackage rec {
   nativeBuildInputs = [
     pytest
     pytest-runner
+    gunicorn
   ];
 
   propagatedBuildInputs = [
     six
     bsddb3
-    (gunicorn.overrideAttrs (old: {
-      propagatedBuildInputs = old.propagatedBuildInputs ++ [ gevent ];
-    }))
+    gunicorn
     gevent
     greenlet
     progressbar2
