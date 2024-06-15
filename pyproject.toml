@@ -35,7 +35,7 @@ version = "2.1.5"
 
 [project.optional-dependencies]
 server = [
-    "gevent>=22.10,<22.11",
+    "gevent>=24.2,<24.3",
     "greenlet>=3.0,<3.1",
 ]
 tests = [

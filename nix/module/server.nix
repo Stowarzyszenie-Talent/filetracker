@@ -5,7 +5,7 @@
     enable = lib.mkEnableOption "filetracker server";
 
     package = lib.mkPackageOption pkgs "Filetracker" {
-      default = [ "python310Packages" "filetracker" ];
+      default = [ "python311Packages" "filetracker" ];
     };
 
     listenAddress = lib.mkOption {

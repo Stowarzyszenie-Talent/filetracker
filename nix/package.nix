@@ -38,7 +38,7 @@ buildPythonPackage rec {
   name = "filetracker";
   version = "2.1.5";
   format = "pyproject";
-  disabled = pythonAtLeast "3.11" || pythonOlder "3.9";
+  disabled = pythonAtLeast "3.12" || pythonOlder "3.9";
 
   src = builtins.path {
     path = ./..;
