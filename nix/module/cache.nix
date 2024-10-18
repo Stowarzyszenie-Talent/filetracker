@@ -73,6 +73,7 @@
       systemd.timers.filetracker-cache-cleaner = {
         enable = true;
         description = "Filetracker cache cleaner";
+        wantedBy = [ "timers.target" ];
 
         timerConfig = {
           OnCalendar = cfg.dates;
