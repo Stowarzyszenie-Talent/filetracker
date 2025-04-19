@@ -3,17 +3,17 @@ requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [metadata]
-name = "filetracker"
+name = "filetracker-talent"
 
 [tool.setuptools]
 package-dir = {"filetracker" = "filetracker"}
 
 [project]
-name = "filetracker"
+name = "filetracker-talent"
 authors = [
-    {name = "SIO2 Project Team", email = "sio2@sio2project.mimuw.edu.pl"},
+    {name = "Olaf Targowski", email = "o.targowski@talent.edu.pl"},
 ]
-description = "Filetracker caching file storage"
+description = "Filetracker caching file storage - Stowarzyszenie Talent's fork"
 readme = "README.md"
 requires-python = ">=3.7"
 license = {text = "GPL"}
@@ -31,7 +31,8 @@ dependencies = [
 version = "2.1.5"
 
 [project.urls] 
-"homepage" = "https://github.com/sio2project/filetracker"
+"homepage" = "https://github.com/Stowarzyszenie-Talent/filetracker"
+"upstream's homepage" = "https://github.com/sio2project/filetracker"
 
 [project.optional-dependencies]
 server = [
