@@ -1,6 +1,6 @@
 {
   description = "Filetracker caching file storage";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/release-25.05";
   inputs.flake-utils.url = "github:numtide/flake-utils";
 
   outputs = { self, nixpkgs, flake-utils }:
@@ -22,7 +22,7 @@
           })
         ];
 
-        filetracker = with final.python311Packages; toPythonApplication filetracker;
+        filetracker = with final.python312Packages; toPythonApplication filetracker;
       };
 
       nixosModules.default = {

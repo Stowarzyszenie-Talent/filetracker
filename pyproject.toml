@@ -15,20 +15,22 @@ authors = [
 ]
 description = "Filetracker caching file storage - Stowarzyszenie Talent's fork"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.10" # idk
 license = {text = "GPL"}
 classifiers = [
     "Framework :: Django",
     "Programming Language :: Python :: 3",
 ]
 dependencies = [
-    "bsddb3<6.3",
-    "gunicorn>=21.2,<21.3",
+    # The maintainer often releases breaking changes while bumping only
+    # the last version part.
+    "berkeleydb==18.1.14",
+    "gunicorn>=23.0,<23.1",
     "progressbar2",
     "requests",
     "six",
 ]
-version = "2.4.1"
+version = "2.5.1"
 
 [project.urls] 
 "homepage" = "https://github.com/Stowarzyszenie-Talent/filetracker"
@@ -36,8 +38,8 @@ version = "2.4.1"
 
 [project.optional-dependencies]
 server = [
-    "gevent>=24.2,<24.3",
-    "greenlet>=3.0,<3.1",
+    "gevent>=24.11,<24.12",
+    "greenlet>=3.2,<3.3",
 ]
 tests = [
     "pytest",

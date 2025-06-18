@@ -29,7 +29,7 @@ import subprocess
 import sys
 import tempfile
 
-import bsddb3
+import berkeleydb as bsddb3
 
 from filetracker.servers.files import FiletrackerServer
 from filetracker.servers.migration import MigrationFiletrackerServer

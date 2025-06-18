@@ -9,9 +9,9 @@
 , python
 , six
 , progressbar2
-, pytest-runner
+#, pytest-runner
 , pytest
-, bsddb3
+, berkeleydb
 , requests
 , gunicorn
 , gevent
@@ -35,10 +35,10 @@ let
   } // rest);
 in
 buildPythonPackage rec {
-  name = "filetracker";
-  version = "2.1.5";
+  name = "filetracker-talent";
+  version = "2.5.1";
   format = "pyproject";
-  disabled = pythonAtLeast "3.12" || pythonOlder "3.9";
+  disabled = pythonAtLeast "3.14" || pythonOlder "3.10";
 
   src = builtins.path {
     path = ./..;
@@ -50,13 +50,13 @@ buildPythonPackage rec {
 
   nativeBuildInputs = [
     pytest
-    pytest-runner
+    #pytest-runner
     gunicorn
   ];
 
   propagatedBuildInputs = [
     six
-    bsddb3
+    berkeleydb
     gunicorn
     gevent
     greenlet

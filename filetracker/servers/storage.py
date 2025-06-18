@@ -39,7 +39,7 @@ import subprocess
 import sys
 import tempfile
 
-import bsddb3
+import berkeleydb as bsddb3
 import six
 
 from filetracker.utils import file_digest, filetracker_dir_mode, filetracker_file_mode
